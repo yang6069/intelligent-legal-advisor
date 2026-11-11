@@ -1,0 +1,22 @@
+﻿# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+# ---- Node / 前端构建 ----
+node_modules/
+dist/
+build/
+# ---- 环境变量 ----
+.env
+.env.*
+!.env.example
+# ---- 运行时数据 / 日志 ----
+backend/data/
+*.log
+*.sqlite3
+*.db
+# ---- IDE ----
+.idea/
+.vscode/

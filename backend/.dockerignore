@@ -1,0 +1,6 @@
+__pycache__
+**/__pycache__
+*.pyc
+data
+_fix_quotes.py
+_test_api.py

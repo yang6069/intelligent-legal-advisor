@@ -1,0 +1,321 @@
+/**
+ * ==================================================================
+ * 智法通前端 | 全局主题样式（亮 / 暗双主题体系）
+ * ------------------------------------------------------------------
+ * 设计语言：
+ *   - 暗色：深海军蓝背景 + 青金色点缀（专业 / 权威 / 稳重），
+ *     玻璃拟态卡片 + 渐变高光 + 微交互动效（原有视觉基因保留）；
+ *   - 亮色：云白雾蓝背景 + 墨蓝正文（清爽 / 明快 / 办公友好），
+ *     同样的玻璃拟态骨架，配以高对比墨色文字；
+ *   - 全部颜色收敛为语义化 CSS 变量，:root 亮色组 / html.dark 暗色组，
+ *     业务视图一律引用变量而非硬编码色值；
+ *   - Element Plus 双模式变量覆写（品牌一致性，按钮/表格/表单对比度达标）。
+ *
+ * 对比度硬性约束（WCAG AA）：
+ *   - 亮色正文 #0f172a 于 #f4f7fc 底 ≈ 14.9:1；次要 #475569 ≈ 7.5:1；
+ *   - 暗色正文 #e5eaf5 于 #0b1220 底 ≈ 14.2:1；次要 #c0cbe0 ≈ 9.1:1；
+ *   - 风险红/黄/绿在两套主题下分别选用加深/提亮变体，确保可读。
+ * ==================================================================
+ */
+
+/* ============================================================
+   一、亮色主题变量（默认 :root）
+   ============================================================ */
+:root {
+  /* ---- 页面骨架 ---- */
+  --zft-bg: #f4f7fc;                          /* 页面底色（云白雾蓝） */
+  --zft-bg-soft: #eaeff8;                     /* 次级背景 */
+  --zft-card: rgba(255, 255, 255, 0.86);      /* 玻璃卡片 */
+  --zft-panel: rgba(255, 255, 255, 0.92);     /* 面板（对话区/发起卡） */
+  --zft-panel-deep: #f1f5f9;                  /* 面板内的次级区块（输入条/内嵌芯片） */
+  --zft-border: rgba(15, 23, 42, 0.12);       /* 常规描边 */
+  --zft-border-strong: rgba(15, 23, 42, 0.2); /* 强描边（tab/悬浮） */
+  --zft-divider: rgba(15, 23, 42, 0.1);       /* 分隔线（虚线/边栏分割） */
+
+  /* ---- 品牌色板 ---- */
+  --zft-primary: #2563eb;                     /* 主色（法律蓝，加深保证亮底对比） */
+  --zft-primary-text: #1d4ed8;                /* 蓝色系强调文字（链接/小标题） */
+  --zft-gold: #b45309;                        /* 金色点缀（琥珀-700，亮底可读） */
+  --zft-cyan: #0e7490;                        /* 青色高光（青-700，亮底可读） */
+
+  /* ---- 文字层次（由深至浅） ---- */
+  --zft-text: #0f172a;                        /* 标题/正文主色 */
+  --zft-text-regular: #334155;                /* 常规正文 */
+  --zft-text-dim: #475569;                    /* 次要说明（≥7:1） */
+  --zft-text-faint: #64748b;                  /* 辅助提示（小字） */
+
+  /* ---- 交互态 ---- */
+  --zft-hover-bg: rgba(15, 23, 42, 0.05);     /* 通用悬浮底 */
+  --zft-primary-soft-bg: rgba(37, 99, 235, 0.07);   /* 品牌淡底（快捷芯片/建议条） */
+  --zft-primary-soft-border: rgba(37, 99, 235, 0.28);
+  --zft-menu-active-bg: linear-gradient(90deg, rgba(37, 99, 235, 0.14), rgba(139, 92, 246, 0.12));
+  --zft-menu-active-text: #1d4ed8;
+  --zft-menu-text: #475569;
+  --zft-menu-text-hover: #0f172a;
+
+  /* ---- 区域背景 ---- */
+  --zft-aside-bg: linear-gradient(180deg, #ffffff 0%, #f2f6fd 100%);
+  --zft-header-bg: rgba(255, 255, 255, 0.78);
+  --zft-stat-chip-bg: #f8fafc;                /* 统计芯片内底 */
+  --zft-stat-chip-border: rgba(15, 23, 42, 0.06);
+  --zft-input-bg: #ffffff;                    /* 输入域底色 */
+  --zft-cite-bg: rgba(15, 23, 42, 0.04);      /* 引用卡片底 */
+  --zft-code-bg: #f8fafc;                     /* 代码/JSON 底 */
+  --zft-code-text: #1e40af;                   /* 代码/JSON 文字 */
+
+  /* ---- 风险语义色（亮色加深变体） ---- */
+  --zft-risk-high: #dc2626;
+  --zft-risk-mid: #b45309;
+  --zft-risk-low: #047857;
+
+  /* ---- 阴影与光效 ---- */
+  --zft-shadow-card: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --zft-shadow-card-hover: 0 12px 32px rgba(15, 23, 42, 0.12);
+  --zft-shadow-float: 0 24px 60px rgba(15, 23, 42, 0.16);
+  --zft-glow-opacity: 0.18;                   /* 登录页动态光斑强度 */
+
+  /* ---- 品牌渐变（两主题通用：白字其上恒可读） ---- */
+  --zft-grad-brand: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --zft-grad-brand-h: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+/* ============================================================
+   二、暗色主题变量（html.dark —— 沿用原深色法律科技风）
+   ============================================================ */
+html.dark {
+  --zft-bg: #0b1220;
+  --zft-bg-soft: #101a2e;
+  --zft-card: rgba(20, 32, 56, 0.72);
+  --zft-panel: rgba(17, 25, 40, 0.62);
+  --zft-panel-deep: rgba(13, 20, 33, 0.8);
+  --zft-border: rgba(148, 163, 184, 0.14);
+  --zft-border-strong: rgba(148, 163, 184, 0.3);
+  --zft-divider: rgba(148, 163, 184, 0.18);
+
+  --zft-primary: #3b82f6;
+  --zft-primary-text: #7cb1ff;
+  --zft-gold: #e3b341;
+  --zft-cyan: #22d3ee;
+
+  --zft-text: #e5eaf5;
+  --zft-text-regular: #cbd5e1;
+  --zft-text-dim: #94a3b8;
+  --zft-text-faint: #8b9bb8;
+
+  --zft-hover-bg: rgba(148, 163, 184, 0.12);
+  --zft-primary-soft-bg: rgba(59, 130, 246, 0.1);
+  --zft-primary-soft-border: rgba(96, 165, 250, 0.3);
+  --zft-menu-active-bg: linear-gradient(90deg, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.2));
+  --zft-menu-active-text: #ffffff;
+  --zft-menu-text: #94a3b8;
+  --zft-menu-text-hover: #e2e8f0;
+
+  --zft-aside-bg: linear-gradient(180deg, #101828 0%, #0b1220 100%);
+  --zft-header-bg: rgba(15, 23, 42, 0.72);
+  --zft-stat-chip-bg: rgba(13, 20, 33, 0.6);
+  --zft-stat-chip-border: rgba(148, 163, 184, 0.1);
+  --zft-input-bg: rgba(15, 23, 42, 0.8);
+  --zft-cite-bg: rgba(15, 23, 42, 0.6);
+  --zft-code-bg: rgba(13, 20, 33, 0.85);
+  --zft-code-text: #93c5fd;
+
+  --zft-risk-high: #f87171;
+  --zft-risk-mid: #fbbf24;
+  --zft-risk-low: #4ade80;
+
+  --zft-shadow-card: 0 8px 32px rgba(2, 8, 20, 0.45);
+  --zft-shadow-card-hover: 0 12px 40px rgba(3, 12, 28, 0.6);
+  --zft-shadow-float: 0 24px 70px rgba(0, 0, 0, 0.5);
+  --zft-glow-opacity: 0.5;
+}
+
+/* ============================================================
+   三、Element Plus 变量覆写（品牌蓝 + 双模式文字保障）
+   ============================================================ */
+:root {
+  /* 亮色品牌蓝：EP 派生梯度一并覆写，保证按钮/链接/选中态同色系 */
+  --el-color-primary: #2563eb;
+  --el-color-primary-light-3: #4f82f0;
+  --el-color-primary-light-5: #7ca6f5;
+  --el-color-primary-light-7: #aecbf9;
+  --el-color-primary-light-8: #c8dcfb;
+  --el-color-primary-light-9: #e7effd;
+  --el-color-primary-dark-2: #1d4ed8;
+  /* 表格/表单文字对比度强化 */
+  --el-text-color-primary: #0f172a;
+  --el-text-color-regular: #334155;
+  --el-text-color-secondary: #475569;
+  --el-text-color-placeholder: #94a3b8;
+  --el-border-color: #d4dce8;
+  --el-fill-color-light: #f4f7fc;
+}
+
+html.dark {
+  /* 暗色：保持原深色科技风覆写 */
+  --el-bg-color: #101a2e;
+  --el-bg-color-overlay: #16233d;
+  --el-border-color: rgba(64, 105, 180, 0.35);
+  --el-border-color-light: rgba(64, 105, 180, 0.25);
+  --el-fill-color-blank: #0d1526;
+  --el-fill-color-light: rgba(30, 48, 82, 0.6);
+  --el-text-color-primary: #e5eaf5;
+  --el-text-color-regular: #c0cbe0;
+  --el-color-primary: #3b82f6;
+  --el-color-primary-light-3: #60a5fa;
+  --el-color-primary-light-5: #7cb1ff;
+  --el-color-primary-light-7: #9ec5ff;
+  --el-color-primary-light-8: #b3d0ff;
+  --el-color-primary-light-9: #1e3a5f;
+  --el-color-primary-dark-2: #2563eb;
+}
+
+/* ============================================================
+   四、全局基底
+   ============================================================ */
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(37, 99, 235, 0.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(14, 116, 144, 0.06), transparent 55%),
+    var(--zft-bg);
+  color: var(--zft-text);
+  font-family: 'HarmonyOS Sans', 'PingFang SC', 'Microsoft YaHei',
+    'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.dark body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(59, 130, 246, 0.14), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(34, 211, 238, 0.10), transparent 55%),
+    var(--zft-bg);
+}
+
+/* ---------- 玻璃拟态卡片 ---------- */
+.zft-card {
+  background: var(--zft-card);
+  border: 1px solid var(--zft-border);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  box-shadow: var(--zft-shadow-card);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.zft-card:hover {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: var(--zft-shadow-card-hover);
+}
+
+/* ---------- 统计卡片顶部渐变条 ---------- */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 22px;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--zft-primary), var(--zft-cyan));
+  opacity: 0.9;
+}
+
+/* ---------- 通用渐变文字（品牌标题） ---------- */
+.zft-gradient-text {
+  background: linear-gradient(120deg, #2563eb 0%, #0e7490 55%, #b45309 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+html.dark .zft-gradient-text {
+  background: linear-gradient(120deg, #7cb1ff 0%, #22d3ee 55%, #e3b341 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---------- 页面标题 ---------- */
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--zft-text);
+}
+.page-title .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--zft-cyan);
+  box-shadow: 0 0 12px var(--zft-cyan);
+}
+
+/* ---------- 滚动条美化（跟随主题） ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(80, 120, 200, 0.35);
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(90, 140, 230, 0.6);
+}
+
+/* ---------- Markdown 渲染区（问答回答） ---------- */
+.md-body {
+  line-height: 1.85;
+  word-break: break-word;
+  color: var(--zft-text-regular);
+}
+.md-body h1, .md-body h2, .md-body h3 {
+  color: var(--zft-primary-text);
+  border-bottom: 1px solid var(--zft-divider);
+  padding-bottom: 6px;
+}
+.md-body code {
+  background: var(--zft-primary-soft-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--zft-cyan);
+}
+html.dark .md-body code { color: #7fe7f7; }
+.md-body blockquote {
+  border-left: 3px solid var(--zft-gold);
+  background: var(--zft-primary-soft-bg);
+  padding: 8px 14px;
+  margin: 10px 0;
+  color: var(--zft-text-dim);
+}
+
+/* ---------- 打字光标（流式生成动画） ---------- */
+.typing-cursor::after {
+  content: '▍';
+  color: var(--zft-cyan);
+  animation: blink 0.9s infinite;
+}
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* ---------- 淡入动画 ---------- */
+.fade-in {
+  animation: fadeIn 0.45s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 风险等级徽标（双主题语义色） ---------- */
+.risk-tag-high { color: var(--zft-risk-high); font-weight: 700; }
+.risk-tag-mid  { color: var(--zft-risk-mid);  font-weight: 700; }
+.risk-tag-low  { color: var(--zft-risk-low);  font-weight: 700; }
